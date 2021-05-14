@@ -8,6 +8,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -39,8 +40,13 @@ public class DemoResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @Timed
-  public String addMessage(DemoMessage message) throws TimeoutException, ExecutionException {
+  public Response addMessage(DemoMessage message) throws TimeoutException, ExecutionException {
     Uninterruptibles.getUninterruptibly(producer.send(message.getMessage()), 20, TimeUnit.SECONDS);
-    return format("received message: %s", message);
+    return Response.ok(format("received message: %s", message)) //200
+			.header("Access-Control-Allow-Origin", "*")
+			.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+			.allow("OPTIONS").build();
+
+    // return format("received message: %s", message);
   }
 }
