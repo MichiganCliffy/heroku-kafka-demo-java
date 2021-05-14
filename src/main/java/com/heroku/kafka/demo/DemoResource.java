@@ -43,7 +43,7 @@ public class DemoResource {
   public Response addMessage(DemoMessage message) throws TimeoutException, ExecutionException {
     Uninterruptibles.getUninterruptibly(producer.send(message.getMessage()), 20, TimeUnit.SECONDS);
     return Response.ok() //200
-      .entity(format("received message: %s", message))
+      .entity(format("{'message': '%s'}", message))
       .type(MediaType.APPLICATION_JSON)
 			.header("Access-Control-Allow-Origin", "*")
 			.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS")
