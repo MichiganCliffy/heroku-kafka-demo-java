@@ -44,7 +44,7 @@ public class DemoResource {
     Uninterruptibles.getUninterruptibly(producer.send(message.getMessage()), 20, TimeUnit.SECONDS);
     return Response.ok() //200
       .entity(format("received message: %s", message))
-      .type(MediaType.TEXT_PLAIN)
+      .type(MediaType.APPLICATION_JSON)
 			.header("Access-Control-Allow-Origin", "*")
 			.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS")
       .header("Access-Control-Allow-Headers", "origin, content-type, accept")
